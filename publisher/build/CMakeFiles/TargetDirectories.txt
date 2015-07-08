@@ -1,0 +1,1 @@
+/home/alexey/Desktop/train-anim-discr/publisher/build/CMakeFiles/publisher.dir

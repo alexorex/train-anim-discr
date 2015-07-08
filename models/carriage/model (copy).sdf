@@ -1,0 +1,172 @@
+<?xml version='1.0'?>
+   <sdf version='1.4'>
+     <model name="carriage">
+
+      <!-- <static>true</static> -->
+<!--  -->
+      <link name='chassis'>
+        <pose>0 0 .1 0 0 0</pose>
+        <inertial>
+          <mass>50</mass>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>.3 .2 .1</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>.3 .2 .1</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <collision name='caster_left_collision'>
+          <pose>-0.15 0 -0.07 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>.03</radius>
+            </sphere>
+          </geometry>
+
+          <surface>
+            <friction>
+              <ode>
+                <mu>0</mu>
+                <mu2>0</mu2>
+                <slip1>1.0</slip1>
+                <slip2>1.0</slip2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+
+        <visual name='caster_left_visual'>
+          <pose>-0.15 0 -0.07 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>.03</radius>
+            </sphere>
+          </geometry>
+        </visual>
+
+        <collision name='caster_right_collision'>
+          <pose>0.15 0 -0.07 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>.03</radius>
+            </sphere>
+          </geometry>
+
+          <surface>
+            <friction>
+              <ode>
+                <mu>0</mu>
+                <mu2>0</mu2>
+                <slip1>1.0</slip1>
+                <slip2>1.0</slip2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+
+        <visual name='caster_right_visual'>
+          <pose>0.15 0 -0.07 0 0 0</pose>
+          <geometry>
+            <sphere>
+              <radius>.03</radius>
+            </sphere>
+          </geometry>
+        </visual>
+      </link>
+
+      <link name="steer">
+        <pose>0 0 0.05 0 0 0</pose>
+      </link>
+
+        <link name="wheel">
+          <pose>0 0 0.03 0 1.5707 0</pose>
+          <inertial>
+            <mass>10</mass>
+          </inertial>
+          <collision name="collision">
+            <geometry>
+              <cylinder>
+                <radius>.03</radius>
+                <length>.02</length>
+              </cylinder>
+            </geometry>
+              <surface>
+                <friction>
+                  <ode>
+                    <mu>100000</mu>
+                    <mu2>100000</mu2>
+                    <slip1>0</slip1>
+                    <slip2>0</slip2>
+                  </ode>
+                </friction>
+                <!-- <contact>
+                  <ode/>
+                </contact> -->
+                <!-- <bounce/> -->
+              </surface>
+              <max_contacts>10</max_contacts>
+          </collision>
+          <visual name="visual">
+            <geometry>
+              <cylinder>
+                <radius>.03</radius>
+                <length>.02</length>
+              </cylinder>
+            </geometry>
+          </visual>
+        </link>
+
+        <joint name='steer_joint' type='revolute'>
+          <child>steer</child>
+          <parent>chassis</parent>
+          <axis>
+            <xyz>0 0 1</xyz>
+            <!-- <use_parent_model_frame>1</use_parent_model_frame> -->
+            <dynamics>
+              <spring_reference>0</spring_reference>
+              <spring_stiffness>7</spring_stiffness>
+              <!-- <damping>1</damping> -->
+            </dynamics>
+            <limit>
+              <lower>-0.52</lower>
+              <upper>0.52</upper>
+            </limit>
+          </axis>
+        </joint>
+
+        <joint name='wheel_joint' type='revolute'>
+          <!-- <pose>0 0 0.03 0 -0 0</pose> -->
+          <child>wheel</child>
+          <parent>steer</parent>
+          <axis>
+            <xyz>1 0 0</xyz>
+            <!-- <use_parent_model_frame>1</use_parent_model_frame> -->
+            <dynamics>
+              <spring_reference>0</spring_reference>
+            </dynamics>
+            <!-- <use_parent_model_frame>1</use_parent_model_frame> -->
+          </axis>
+          <!-- <axis2>
+            <xyz>0 0 1</xyz>
+            <use_parent_model_frame>1</use_parent_model_frame>
+            <limit>
+              <lower>-0</lower>
+              <upper>0</upper>
+            </limit>
+            <dynamics>
+              <spring_reference>0</spring_reference>
+            </dynamics>
+          </axis2> -->
+        </joint>
+    </model>
+   </sdf>
